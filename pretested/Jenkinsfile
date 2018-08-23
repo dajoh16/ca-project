@@ -1,15 +1,27 @@
 node {
   
-  stage("Checkout"){
-       git credentialsId: 'frederikmadsen', url: 'git@github.com:dajoh16/ca-project.git'
-  }
+stage('Preparation') { // for display purposes
+        // Get some code from a GitHub repository
 
+    checkout([$class: 'GitSCM', branches: [[name: '*/ready/**']], 
+    doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout'], 
+    pretestedIntegration(gitIntegrationStrategy: accumulated(), integrationBranch: 'master', 
+    repoName: 'origin')], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'frederikmadsen', 
+    url: 'git@github.com:dajoh16/ca-project.git']]])
+}
   stage('Build'){
     sh 'docker build -t magida/codechan .'
   }
 
   stage('Test'){
+    sh 'cat tests.py'
     sh 'docker container run -i --rm magida/codechan tests.py'
+  }
+
+  stage('Push'){
+    pretestedIntegrationPublisher()
+
+    deleteDir()
   }
 
 }

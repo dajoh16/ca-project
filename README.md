@@ -1,4 +1,4 @@
-# Keystone project
+i# Keystone project
 
 This project is meant for you to make awesome software, with the skills in your Continuous Delivery and DevOps toolbox.
 Have fun, automate and be awesome!
@@ -35,7 +35,8 @@ Your project manager calls you for a meeting and let's you in on the details on 
 
 He truly knows that you are very eager to get started and do cool stuff. But unfortunately they have a Python Flask Web application that runs in production at a bunch of customers, and no one quite remembers how it works. _It's called CoDeChan, just like 4chan but for CoDe. You get it, right, don't you? Ahh never mind then...._
 
-The application is _CoDe Chan_ an anonymous posting tool. No one really knows why or for what the customers use it. But never the less, it brings in some cash.
+T
+he application is _CoDe Chan_ an anonymous posting tool. No one really knows why or for what the customers use it. But never the less, it brings in some cash.
 
 It is of course important to keep this running well and good, otherwise Initrode might end up looking very bad indeed.
 
@@ -190,4 +191,6 @@ The following are suggestions to explorations that you can take.
   - Make links in a post clickable
   - Make the layout prettier
   - Add additional pages
-  - Add fields to the post
+- Add fields to the post
+
+a very good change
