@@ -8,7 +8,7 @@ node('master_01'){
     }
 } 
 stage('Build'){
-    parallel(){
+    parallel archiving: {
     node(){
         stage("Archive Artifacts"){
             unstash 'githubrepo'
@@ -17,6 +17,8 @@ stage('Build'){
             archiveArtifacts 'CodeChan.zip'
         }
     }
+    }, releasepublish: {
+
     node(){
         stage('Release Build'){
             unstash 'dockerfile'
@@ -28,6 +30,7 @@ stage('Build'){
             }
         }
     }
+    }, deploytest: {
  
     node('ubuntu-deploy'){
         stage("Deploy"){
@@ -38,7 +41,7 @@ stage('Build'){
             sh 'curl localhost:5000'
         }
     }
-    }
+  }
 }
 node(){
        stage("Production"){
