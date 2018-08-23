@@ -9,7 +9,6 @@ node('ubuntu-deploy'){
         sh 'curl localhost:5000'
     }
     stage("Production"){
-        sh 'whoami'
-        sh 'ssh root@104.248.30.163 "echo hello-world > test.txt"'
+        sh 'ssh root@104.248.30.163 "docker container run -d -p 5000:500 magida/codechan"'
     }
 }
