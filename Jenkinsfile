@@ -8,7 +8,7 @@ node('master_01'){
     }
 } 
 stage('Build'){
-    parallel{
+    parallel(){
     node(){
         stage("Archive Artifacts"){
             unstash 'githubrepo'
