@@ -1,0 +1,15 @@
+node {
+  
+  stage("Checkout"){
+       git credentialsId: 'frederikmadsen', url: 'git@github.com:dajoh16/ca-project.git'
+  }
+
+  stage('Build'){
+    sh 'docker build -t magida/codechan .'
+  }
+
+  stage('Test'){
+    sh 'docker container run -i --rm magida/codechan tests.py'
+  }
+
+}
