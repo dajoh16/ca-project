@@ -18,12 +18,13 @@ node('ubuntu-deploy'){
         sh 'docker build -t magida/codechan:release .'
     }
     stage('Publish'){
-        withDockerRegistry(credentialsId: 'DockerHubMagida', url: 'https://hub.docker.com/r/magida/codechan/') {
+        withDockerRegistry(credentialsId: 'DockerHubMagida', url: '') {
             sh 'docker push magida/codechan:release'
         }
     }
     stage("Production"){
         sh 'ssh root@104.248.30.163 "docker stop CodeChan || true"' 
+        sh 'ssh root@104.248.30.163 "docker pull magida/codechan:release"'
         sh 'ssh root@104.248.30.163 "docker container run --name=CodeChan --rm -d -p 5000:5000 magida/codechan:release"'
     }
 }
