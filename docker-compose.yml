@@ -3,7 +3,7 @@ services:
  flask:
   image: magida/codechan
   ports: 
-  - 80:5000
+  - 5000:5000
   volumes:
   - ./app.db:/home/ubuntu/dist/app.db
 
