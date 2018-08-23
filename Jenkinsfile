@@ -14,8 +14,16 @@ node('ubuntu-deploy'){
         sh 'zip -r CodeChan.zip .'
         archiveArtifacts 'CodeChan.zip'
     }
+    stage('Release Build'){
+        sh 'docker build -t magida/codechan:release .'
+    }
+    stage('Publish'){
+        withDockerRegistry(credentialsId: 'DockerHubMagida', url: 'https://hub.docker.com/r/magida/codechan/') {
+            sh 'docker push magida/codechan:release'
+        }
+    }
     stage("Production"){
         sh 'ssh root@104.248.30.163 "docker stop CodeChan || true"' 
-        sh 'ssh root@104.248.30.163 "docker container run --name=CodeChan --rm -d -p 5000:5000 magida/codechan"'
+        sh 'ssh root@104.248.30.163 "docker container run --name=CodeChan --rm -d -p 5000:5000 magida/codechan:release"'
     }
 }
