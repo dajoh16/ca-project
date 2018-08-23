@@ -2,7 +2,7 @@ node {
   
   stage("Checkout"){
     checkout scm
-       git credentialsId: 'frederikmadsen', url: 'git@github.com:dajoh16/ca-project.git'
+    // git credentialsId: 'frederikmadsen', url: 'git@github.com:dajoh16/ca-project.git'
   }
 
   stage('Build'){
@@ -10,6 +10,7 @@ node {
   }
 
   stage('Test'){
+    sh 'cat tests.py'
     sh 'docker container run -i --rm magida/codechan tests.py'
   }
 
