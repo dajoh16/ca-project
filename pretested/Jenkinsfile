@@ -2,7 +2,7 @@ node {
   
 stage('Preparation') { // for display purposes
         // Get some code from a GitHub repository
-
+    cleanWs()
     checkout([$class: 'GitSCM', branches: [[name: '*/ready/**']], 
     doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout'], 
     pretestedIntegration(gitIntegrationStrategy: accumulated(), integrationBranch: 'master', 
