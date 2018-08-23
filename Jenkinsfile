@@ -8,4 +8,7 @@ node('ubuntu-deploy'){
     stage("Functional tests") {
         sh 'curl localhost:5000'
     }
+    stage("Production"){
+        sh 'ssh root@104.248.30.163 "echo hello-world > test.txt"'
+    }
 }
