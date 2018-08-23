@@ -8,7 +8,12 @@ node('ubuntu-deploy'){
     stage("Functional tests") {
         sh 'curl localhost:5000'
     }
+    stage("Archive Artifacts"){
+        sh 'pwd'
+        sh 'zip CodeChan.zip .'
+        archiveArtifacts 'CodeChan.zip'
+    }
     stage("Production"){
-        sh 'ssh root@104.248.30.163 "docker container run -d -p 5000:500 magida/codechan"'
+        sh 'ssh root@104.248.30.163 "docker container run -d -p 5000:5000 magida/codechan"'
     }
 }
