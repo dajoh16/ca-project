@@ -1,12 +1,12 @@
-
-node('master_01')
+node('master_01'){
     stage("Checkout"){
         cleanWs()
         git credentialsId: 'frederikmadsen', url: 'git@github.com:dajoh16/ca-project.git'
         stash includes: './docker-compose.yml', name: 'docker-compose'
         stash includes: './Dockerfile', name: 'dockerfile'
         stash includes: './**', name: 'githubrepo'
-    } 
+    }
+} 
 stage('Build'){
     parallel{
     node(){
