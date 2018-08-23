@@ -14,6 +14,6 @@ node('ubuntu-deploy'){
         archiveArtifacts 'CodeChan.zip'
     }
     stage("Production"){
-        sh 'ssh root@104.248.30.163 "docker container run -d -p 5000:5000 magida/codechan"'
+        sh 'ssh root@104.248.30.163 "docker container run --rm -d -p 5000:5000 magida/codechan"'
     }
 }
