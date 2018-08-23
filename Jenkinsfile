@@ -1,5 +1,5 @@
-parallel {
- node('master_01')
+
+node('master_01')
     stage("Checkout"){
         cleanWs()
         git credentialsId: 'frederikmadsen', url: 'git@github.com:dajoh16/ca-project.git'
@@ -7,38 +7,39 @@ parallel {
         stash includes: './Dockerfile', name: 'dockerfile'
         stash includes: './**', name: 'githubrepo'
     } 
-
-node(){
-    stage("Archive Artifacts"){
-        unstash 'githubrepo'
-        sh 'pwd'
-        sh 'zip -r CodeChan.zip .'
-        archiveArtifacts 'CodeChan.zip'
+stage('Build'){
+    parallel{
+    node(){
+        stage("Archive Artifacts"){
+            unstash 'githubrepo'
+            sh 'pwd'
+            sh 'zip -r CodeChan.zip .'
+            archiveArtifacts 'CodeChan.zip'
+        }
     }
-}
-node(){
-    stage('Release Build'){
-        unstash 'dockerfile'
-        sh 'docker build -t magida/codechan:release .'
-    }
+    node(){
+        stage('Release Build'){
+            unstash 'dockerfile'
+            sh 'docker build -t magida/codechan:release .'
+        }
     stage('Publish'){
         withDockerRegistry(credentialsId: 'DockerHubMagida', url: '') {
             sh 'docker push magida/codechan:release'
+            }
         }
     }
-}
  
- node('ubuntu-deploy'){
-    stage("Deploy"){
-        unstash 'docker-compose'
-        sh 'docker-compose up -d'
+    node('ubuntu-deploy'){
+        stage("Deploy"){
+            unstash 'docker-compose'
+            sh 'docker-compose up -d'
+        }
+        stage("Functional tests") {
+            sh 'curl localhost:5000'
+        }
     }
-    stage("Functional tests") {
-        sh 'curl localhost:5000'
     }
 }
-}
-
 node(){
        stage("Production"){
         sh 'ssh root@104.248.30.163 "docker stop CodeChan || true"' 
