@@ -1,4 +1,4 @@
-node{
+node('ubuntu-deploy'){
     stage("Checkout"){
         git credentialsId: 'frederikmadsen', url: 'git@github.com:dajoh16/ca-project.git'
     }
