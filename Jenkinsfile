@@ -10,7 +10,7 @@ node('ubuntu-deploy'){
     }
     stage("Archive Artifacts"){
         sh 'pwd'
-        sh 'zip CodeChan.zip .'
+        sh 'zip -r CodeChan.zip .'
         archiveArtifacts 'CodeChan.zip'
     }
     stage("Production"){
